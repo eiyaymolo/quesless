@@ -1,0 +1,42 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="row" style="margin-bottom:16px">
+  <div>
+    <h1>Hi {{ user.first_name|default:user.username }}! 👋</h1>
+    <p class="sub" style="margin:0">Here are your documents.</p>
+  </div>
+  <a class="btn" href="{% url 'request_create' %}">➕ New request</a>
+</div>
+
+{% for r in items %}
+<div class="card lift">
+  <div class="row">
+    <h2 style="margin:0">{{ r.document_type.emoji }} {{ r.document_type }}</h2>
+    <span class="badge status-{{ r.status }}">{{ r.get_status_display }}</span>
+  </div>
+  {% if r.status != "rejected" %}
+  <div class="track">
+    <div class="{% if r.step >= 1 %}on{% endif %}">Sent</div>
+    <div class="{% if r.step >= 2 %}on{% endif %}">Approved</div>
+    <div class="{% if r.step >= 3 %}on{% endif %}">Ready</div>
+    <div class="{% if r.step >= 4 %}on{% endif %}">Done</div>
+  </div>
+  {% endif %}
+  <p style="margin:10px 0"><b>{{ r.status_help }}</b></p>
+  {% if r.pickup_slot and r.status != "rejected" %}
+    <p>📅 <b>Pickup:</b> {{ r.pickup_slot.date|date:"l, F j, Y" }}, {{ r.pickup_slot.start_time|time:"g:i A" }} to {{ r.pickup_slot.end_time|time:"g:i A" }}</p>
+  {% endif %}
+  <p class="muted">Reference code: <b>{{ r.reference_code }}</b> &middot; Sent {{ r.created_at|date:"M j, Y" }}</p>
+  {% if r.document_file %}
+    <a class="btn btn-sun" href="{% url 'download_document' r.pk %}">⬇️ Download PDF</a>
+  {% endif %}
+</div>
+{% empty %}
+<div class="card" style="text-align:center">
+  <span class="big">📭</span>
+  <h2>Nothing here yet</h2>
+  <p class="sub">Start by requesting your first document.</p>
+  <a class="btn" href="{% url 'request_create' %}">Request a document</a>
+</div>
+{% endfor %}
+{% endblock %}

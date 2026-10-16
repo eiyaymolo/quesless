@@ -1,0 +1,23 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<h1>👥 Barangay staff</h1>
+<p class="sub">Residents sign up on the resident site. Search for them here and make them staff.</p>
+<form method="get" class="row" style="gap:8px;flex-wrap:nowrap">
+  <input type="text" name="q" value="{{ q }}" placeholder="Search by name or username">
+  <button type="submit">Search</button>
+</form>
+<div style="margin-top:16px">
+{% for u in users %}
+<div class="card row">
+  <div><b>{{ u.get_full_name|default:u.username }}</b> <span class="muted">@{{ u.username }}</span>
+    {% if u.is_staff %}<span class="badge status-ready">Staff</span>{% endif %}</div>
+  <form method="post">{% csrf_token %}<input type="hidden" name="user" value="{{ u.pk }}">
+    {% if u.is_staff %}<button type="submit" class="btn-red" style="background:var(--pink)">Remove staff</button>
+    {% else %}<button type="submit">Make staff</button>{% endif %}
+  </form>
+</div>
+{% empty %}
+<div class="card muted">No accounts found.</div>
+{% endfor %}
+</div>
+{% endblock %}

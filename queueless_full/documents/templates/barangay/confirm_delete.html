@@ -1,0 +1,12 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="center card" style="text-align:center">
+  <span class="big">🗑️</span>
+  <h2>Delete "{{ obj }}"?</h2>
+  <p class="sub">This cannot be undone.</p>
+  <form method="post">{% csrf_token %}
+    <button type="submit" class="btn-red" style="background:var(--pink)">Yes, delete</button>
+    <a class="btn btn-light" href="{% url back %}">No, go back</a>
+  </form>
+</div>
+{% endblock %}

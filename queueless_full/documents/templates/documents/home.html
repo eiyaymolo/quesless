@@ -1,0 +1,42 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="hero">
+  <span class="float" style="left:6%;top:12%">📄</span>
+  <span class="float" style="right:8%;top:18%;animation-delay:1s">⏰</span>
+  <span class="float" style="left:12%;bottom:10%;animation-delay:2s">✅</span>
+  <span class="float" style="right:14%;bottom:12%;animation-delay:3s">🏠</span>
+  <h1>Skip the line,<br>not the service! 🚀</h1>
+  <p>Request your barangay documents from your phone.<br>Pick it up on your time, or download it.</p>
+  <div class="btns">
+    <a class="btn btn-sun" href="{% url 'register' %}">Get started - it's free</a>
+    <a class="btn btn-light" href="{% url 'login' %}">I have an account</a>
+  </div>
+</div>
+
+<h2 style="margin-top:28px">Why you'll love it 💚</h2>
+<div class="grid3">
+  <div class="card lift"><span class="big">⏱️</span><b>No more waiting</b><p class="muted">Request in 1 minute. No need to line up at the hall.</p></div>
+  <div class="card lift"><span class="big">📍</span><b>Track every step</b><p class="muted">See if your request is sent, approved, or ready.</p></div>
+  <div class="card lift"><span class="big">📲</span><b>Pick up or download</b><p class="muted">Get a pickup time, or download your PDF online.</p></div>
+</div>
+
+<div class="card">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><b>Sign up</b><br><span class="muted">Make your free account.</span></li>
+    <li><b>Pick your document</b><br><span class="muted">Clearance, Indigency, Residency, and more.</span></li>
+    <li><b>Wait for the green light</b><br><span class="muted">Staff checks it. You see the status anytime.</span></li>
+    <li><b>Get it! 🎉</b><br><span class="muted">Pick it up at your time slot or download it.</span></li>
+  </ol>
+</div>
+
+<h2 style="margin-top:24px">Questions? 🤔</h2>
+<details><summary>Is it free to use?</summary><p class="muted">Making an account and sending a request is free. Some documents may have a fee at the barangay hall.</p></details>
+<details><summary>What do I bring when I pick up?</summary><p class="muted">Bring a valid ID and your reference code. You can find the code on your My Requests page.</p></details>
+<details><summary>How long does it take?</summary><p class="muted">Staff will check your request soon. You can watch the progress bar on your request.</p></details>
+
+<div class="card" style="text-align:center;margin-top:20px">
+  <h2>Ready to skip the line? ⚡</h2>
+  <a class="btn" href="{% url 'register' %}">Create my account</a>
+</div>
+{% endblock %}

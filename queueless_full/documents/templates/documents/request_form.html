@@ -1,0 +1,16 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<h1>📝 Request a document</h1>
+<p class="sub">Tap the document you need, tell us why, and send!</p>
+<div class="card">
+  <form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Send my request 🚀</button></form>
+</div>
+<div class="card">
+  <h2>What happens next?</h2>
+  <ol class="steps">
+    <li>Staff checks your request.</li>
+    <li>Watch the progress on <b>My Requests</b>.</li>
+    <li>When it's ready, pick it up or download it. 🎉</li>
+  </ol>
+</div>
+{% endblock %}

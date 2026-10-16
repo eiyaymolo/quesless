@@ -1,0 +1,9 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="center card">
+  <h2>🏛️ Barangay Portal</h2>
+  <p class="sub">For barangay staff and admin only.</p>
+  <form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Log in</button></form>
+  <p class="muted" style="margin-top:16px">Are you a resident? <a href="{% url 'login' %}">Go to the resident login</a></p>
+</div>
+{% endblock %}

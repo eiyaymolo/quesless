@@ -1,0 +1,27 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<h1>🏛️ Barangay Portal</h1>
+<p class="sub">Hi {{ user.first_name|default:user.username }}! What do you want to do today?</p>
+<div class="stats">
+  <div class="stat"><b>{{ pending }}</b>⏳ Waiting</div>
+  <div class="stat"><b>{{ ready }}</b>✅ Ready</div>
+  <div class="stat"><b>{{ total }}</b>📚 All requests</div>
+</div>
+<div class="tiles">
+  <a class="tile" href="{% url 'barangay_requests' %}"><span class="big">📋</span><b>Requests</b><br><span class="muted">Check and approve</span></a>
+  <a class="tile" href="{% url 'doctype_list' %}"><span class="big">📄</span><b>Documents</b><br><span class="muted">What residents can request</span></a>
+  <a class="tile" href="{% url 'slot_list' %}"><span class="big">📅</span><b>Pickup times</b><br><span class="muted">Dates and time slots</span></a>
+  {% if user.is_superuser %}<a class="tile" href="{% url 'staff_accounts' %}"><span class="big">👥</span><b>Staff</b><br><span class="muted">Who can use this portal</span></a>{% endif %}
+</div>
+<div class="card">
+  <h2>⏳ Waiting for you</h2>
+  {% for r in latest %}
+    <div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)">
+      <span>{{ r.document_type.emoji }} <b>{{ r.document_type }}</b> - {{ r.resident.get_full_name|default:r.resident.username }}</span>
+      <a class="btn" style="padding:6px 14px" href="{% url 'barangay_update' r.pk %}">Open</a>
+    </div>
+  {% empty %}
+    <p class="muted">All caught up! No requests are waiting. 🎉</p>
+  {% endfor %}
+</div>
+{% endblock %}

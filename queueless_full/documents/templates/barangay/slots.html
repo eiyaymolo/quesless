@@ -1,0 +1,18 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="row" style="margin-bottom:16px">
+  <div><h1>📅 Pickup times</h1><p class="sub" style="margin:0">Residents pick up their documents in these time slots.</p></div>
+  <a class="btn" href="{% url 'slot_new' %}">➕ Add a pickup time</a>
+</div>
+{% for s in items %}
+<div class="card row">
+  <div><b>{{ s.date|date:"l, F j, Y" }}</b><br><span class="muted">{{ s.start_time|time:"g:i A" }} to {{ s.end_time|time:"g:i A" }} &middot; {{ s.slots_left }} of {{ s.capacity }} spots left</span></div>
+  <div>
+    <a class="btn" style="padding:6px 14px" href="{% url 'slot_edit' s.pk %}">Edit</a>
+    <a class="btn btn-red" style="padding:6px 14px" href="{% url 'slot_delete' s.pk %}">Delete</a>
+  </div>
+</div>
+{% empty %}
+<div class="card" style="text-align:center"><span class="big">📭</span><h2>No pickup times yet</h2><p class="sub">Add a date and time so residents can pick up.</p></div>
+{% endfor %}
+{% endblock %}

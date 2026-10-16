@@ -1,0 +1,18 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<div class="row" style="margin-bottom:16px">
+  <div><h1>📄 Documents</h1><p class="sub" style="margin:0">These are what residents can request.</p></div>
+  <a class="btn" href="{% url 'doctype_new' %}">➕ Add a document</a>
+</div>
+{% for d in items %}
+<div class="card row">
+  <div><b>{{ d.emoji }} {{ d.name }}</b><br><span class="muted">{{ d.description|default:"No description" }} &middot; Fee: ₱{{ d.fee }}</span></div>
+  <div>
+    <a class="btn" style="padding:6px 14px" href="{% url 'doctype_edit' d.pk %}">Edit</a>
+    <a class="btn btn-red" style="padding:6px 14px" href="{% url 'doctype_delete' d.pk %}">Delete</a>
+  </div>
+</div>
+{% empty %}
+<div class="card" style="text-align:center"><span class="big">📭</span><h2>No documents yet</h2><p class="sub">Add Barangay Clearance, Indigency, and others.</p></div>
+{% endfor %}
+{% endblock %}

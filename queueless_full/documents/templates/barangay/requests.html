@@ -1,0 +1,40 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<h1>📋 Requests</h1>
+<p class="sub">Search by reference code or name.</p>
+<form method="get" class="row" style="gap:8px;flex-wrap:nowrap">
+  <input type="text" name="q" value="{{ q }}" placeholder="Type a reference code or name">
+  {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+  <button type="submit">Search</button>
+</form>
+<div class="chips">
+  <a class="chip {% if not status %}on{% endif %}" href="?q={{ q }}">All</a>
+  {% for value, label in statuses %}
+    <a class="chip {% if status == value %}on{% endif %}" href="?status={{ value }}&q={{ q }}">{{ label }}</a>
+  {% endfor %}
+</div>
+<div class="card table-wrap">
+  <table>
+    <tr><th>Code</th><th>Resident</th><th>Document</th><th>Status</th><th>Pickup</th><th></th></tr>
+    {% for r in items %}
+    <tr>
+      <td><b>{{ r.reference_code }}</b></td>
+      <td>{{ r.resident.get_full_name|default:r.resident.username }}</td>
+      <td>{{ r.document_type.emoji }} {{ r.document_type }}</td>
+      <td><span class="badge status-{{ r.status }}">{{ r.get_status_display }}</span></td>
+      <td>{{ r.pickup_slot|default:"-" }}</td>
+      <td style="white-space:nowrap">
+        <a class="btn" style="padding:6px 12px" href="{% url 'barangay_update' r.pk %}">Update</a>
+        {% if r.status == "ready" %}
+        <form method="post" action="{% url 'barangay_release' r.pk %}" style="display:inline">{% csrf_token %}
+          <button type="submit" class="btn-sun" style="padding:6px 12px;background:var(--sun);color:#3b2a00">Picked up ✓</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="muted">No requests found.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

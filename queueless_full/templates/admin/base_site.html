@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }} | QueueLess{% endblock %}
+{% block extrastyle %}{{ block.super }}
+<style>
+  :root {
+    --primary:#0f7b5f; --secondary:#0a5c47; --accent:#14b8a6;
+    --header-bg:#0f7b5f; --header-color:#fff; --header-link-color:#fff;
+    --breadcrumbs-bg:#0a5c47; --breadcrumbs-link-fg:#fff; --breadcrumbs-fg:#d1f5e3;
+    --button-bg:#0f7b5f; --button-hover-bg:#0a5c47;
+    --default-button-bg:#0f7b5f; --default-button-hover-bg:#0a5c47;
+    --object-tools-bg:#0f7b5f; --object-tools-hover-bg:#0a5c47;
+    --link-fg:#0f7b5f; --link-hover-color:#0a5c47;
+  }
+</style>
+{% endblock %}
+{% block branding %}<div id="site-name"><a href="{% url 'admin:index' %}">⚡ QueueLess Admin</a></div>{% endblock %}
+{% block nav-global %}{% endblock %}

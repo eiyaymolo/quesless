@@ -1,0 +1,14 @@
+{% extends "documents/base.html" %}
+{% block content %}
+<h1>Update request</h1>
+<div class="card">
+  <p style="margin:0">{{ doc.document_type.emoji }} <b>{{ doc.document_type }}</b> for {{ doc.resident.get_full_name|default:doc.resident.username }}</p>
+  <p class="muted" style="margin:4px 0 0">Reason: {{ doc.purpose }} &middot; Code: {{ doc.reference_code }}</p>
+</div>
+<div class="card">
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}
+    <button type="submit">Save changes</button>
+    <a class="btn btn-light" href="{% url 'barangay_requests' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}
